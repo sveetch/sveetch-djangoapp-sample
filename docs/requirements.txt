@@ -1,0 +1,1 @@
+sveetch-djangoapp-sample
