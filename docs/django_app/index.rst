@@ -8,3 +8,5 @@ Django application
    :maxdepth: 2
 
    models.rst
+   serializers.rst
+   viewsets.rst

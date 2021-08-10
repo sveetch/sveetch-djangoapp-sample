@@ -44,8 +44,7 @@ ALLOWED_HOSTS = ["*"]
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-# TIME_ZONE = "America/Chicago"
-TIME_ZONE = "Europe/Paris"
+TIME_ZONE = "America/Chicago"
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -147,14 +146,29 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
-    "djangoapp_sample",
+    "django.forms",
+    "djangoapp_sample.apps.djangoapp_sampleConfig",
+    "rest_framework",
 ]
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+# Ensure we can override applications widgets templates from project template
+# directory, require also 'django.forms' in INSTALLED_APPS
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
+
+# Django REST Framework configuration
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 """
 SPECIFIC BASE APPLICATIONS SETTINGS BELOW
 """

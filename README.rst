@@ -1,5 +1,6 @@
 .. _Python: https://www.python.org/
 .. _Django: https://www.djangoproject.com/
+.. _Django REST framework: https://www.django-rest-framework.org/
 
 =========================
 Sveetch Django app sample
@@ -12,7 +13,8 @@ Dependancies
 ************
 
 * `Python`_>=3.6;
-* `Django`_>=2.1;
+* `Django`_>=2.2;
+* `Django REST framework`_>=3.12.0;
 
 Links
 *****

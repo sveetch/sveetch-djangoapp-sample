@@ -31,7 +31,7 @@ from djangoapp_sample import __version__ as djangoapp_sample_version
 # -- Project information -----------------------------------------------------
 
 project = 'sveetch-djangoapp-sample'
-copyright = '2020, David Thenon'
+copyright = '2021, David Thenon'
 author = 'David Thenon'
 
 # The short X.Y version

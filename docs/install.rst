@@ -17,12 +17,20 @@ Add it to your installed Django apps in settings : ::
 
     INSTALLED_APPS = (
         ...
-        'djangoapp_sample',
+        "rest_framework",
+        "djangoapp_sample",
     )
 
 Then load default application settings in your settings file: ::
 
     from djangoapp_sample.settings import *
+
+Then mount applications URLs: ::
+
+    urlpatterns = [
+        ...
+        path("", include("djangoapp_sample.urls")),
+    ]
 
 And finally apply database migrations.
 
