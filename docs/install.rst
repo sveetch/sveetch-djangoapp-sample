@@ -1,4 +1,4 @@
-.. _intro_install:
+.. _install_intro:
 
 =======
 Install
@@ -8,7 +8,7 @@ Install package in your environment : ::
 
     pip install sveetch-djangoapp-sample
 
-For development usage see :ref:`install_development`.
+For development usage see :ref:`development_install`.
 
 Configuration
 *************

@@ -1,40 +1,17 @@
-.. _Python: https://www.python.org
-.. _Django: https://www.djangoproject.com/
-.. _Django REST framework: https://www.django-rest-framework.org/
+.. include:: ../README.rst
 
-.. sveetch-djangoapp-sample documentation master file, created by David Thenon
 
-=========================
-Sveetch Django app sample
-=========================
-
-A project sample created from
-`cookiecutter-sveetch-djangoapp <https://github.com/sveetch/cookiecutter-sveetch-djangoapp>`_.
-
-Dependancies
-************
-
-* `Python`_>=3.6;
-* `Django`_>=2.2;
-* `Django REST framework`_>=3.12.0;
-
-Links
-*****
-
-* Read the documentation on `Read the docs <https://sveetch-djangoapp-sample.readthedocs.io/>`_;
-* Download its `PyPi package <https://pypi.python.org/pypi/sveetch-djangoapp-sample>`_;
-* Clone it on its `Github repository <https://github.com/sveetch/sveetch-djangoapp-sample>`_;
-
-User’s Guide
-************
+Contents
+********
 
 .. toctree::
    :maxdepth: 2
 
    install.rst
-   django_app/index.rst
+   references/index.rst
 
-Developer’s Guide
+
+About the project
 *****************
 
 .. toctree::

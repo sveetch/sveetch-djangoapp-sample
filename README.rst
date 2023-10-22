@@ -6,15 +6,16 @@
 Sveetch Django app sample
 =========================
 
-A project sample created from
-`cookiecutter-sveetch-djangoapp <https://github.com/sveetch/cookiecutter-sveetch-djangoapp>`_.
+A project sample created from cookiecutter-sveetch-djangoapp
+
 
 Dependancies
 ************
 
-* `Python`_>=3.6;
-* `Django`_>=2.2;
-* `Django REST framework`_>=3.12.0;
+* `Python`_>=3.8;
+* `Django`_>=3.2,<4.2;
+* `Django REST framework`_>=3.14.0;
+
 
 Links
 *****
