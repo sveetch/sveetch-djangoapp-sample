@@ -3,7 +3,7 @@ Specific application exceptions.
 """
 
 
-class SveetchDjangoappSampleBaseException(Exception):
+class SveetchdjangoappsampleBaseException(Exception):
     """
     Exception base.
 
@@ -13,7 +13,7 @@ class SveetchDjangoappSampleBaseException(Exception):
     pass
 
 
-class AppOperationError(SveetchDjangoappSampleBaseException):
+class AppOperationError(SveetchdjangoappsampleBaseException):
     """
     Sample exception to raise from your code.
     """

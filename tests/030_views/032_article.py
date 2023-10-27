@@ -1,41 +1,41 @@
-from tests.utils import html_pyquery
+from djangoapp_sample.utils.tests import html_pyquery
 
 from djangoapp_sample.factories import ArticleFactory, BlogFactory
 
 
-def test_article_detail_404(db, client):
+def test_article_detail_404(db, client, cms_homepage):
     """
     Try to reach unexisting article should return a 404 response.
     """
     blog1 = BlogFactory(title="blog1")
 
-    url = "/{blog_pk}/1/".format(blog_pk=blog1.id)
+    url = "/djangoapp_sample/{blog_pk}/1/".format(blog_pk=blog1.id)
 
-    response = client.get(url)
+    response = client.get(url, follow=True)
 
     assert response.status_code == 404
 
 
-def test_article_detail_noblog(db, client):
+def test_article_detail_noblog(db, client, cms_homepage):
     """
     If required blog ID in url does not exists, article detail should return a
     404 response.
     """
-    url = "/42/1/"
+    url = "/djangoapp_sample/42/1/"
 
-    response = client.get(url)
+    response = client.get(url, follow=True)
 
     assert response.status_code == 404
 
 
-def test_article_detail_content(db, client):
+def test_article_detail_content(db, client, cms_homepage):
     """
     Article content should be displayed correctly.
     """
     blog = BlogFactory(title="blog1")
     article = ArticleFactory(blog=blog)
 
-    url = "/{blog_pk}/{article_pk}/".format(
+    url = "/djangoapp_sample/{blog_pk}/{article_pk}/".format(
         blog_pk=blog.id,
         article_pk=article.id,
     )

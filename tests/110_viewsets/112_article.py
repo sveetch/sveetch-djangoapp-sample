@@ -6,10 +6,12 @@ import pytz
 from django.conf import settings
 from rest_framework.test import APIClient
 
-from djangoapp_sample.factories import ArticleFactory, BlogFactory, UserFactory
+from djangoapp_sample.factories import (
+    ArticleFactory, BlogFactory, UserFactory
+)
 from djangoapp_sample.models import Article
 
-from tests.utils import DRF_DUMMY_HOST_URL as HOSTURL
+from djangoapp_sample.utils.tests import DRF_DUMMY_HOST_URL as HOSTURL
 
 
 def test_article_viewset_list(db):
@@ -32,19 +34,32 @@ def test_article_viewset_list(db):
 
     # Use test client to get article list
     client = APIClient()
-    response = client.get("/api/articles/", format="json")
+    response = client.get("/djangoapp_sample/api/articles/", format="json")
     json_data = response.json()
 
     # Expected payload from JSON response
     expected = [
         {
             "id": bonorum.id,
-            "url": "{}/api/articles/{}/".format(HOSTURL, bonorum.id),
-            "view_url": "{}/{}/{}/".format(HOSTURL, bonorum.blog_id, bonorum.id),
+            "url": "{}/djangoapp_sample/api/articles/{}/".format(
+                HOSTURL,
+                bonorum.id
+            ),
+            "view_url": "{}/djangoapp_sample/{}/{}/".format(
+                HOSTURL,
+                bonorum.blog_id,
+                bonorum.id
+            ),
             "blog": {
                 "id": bonorum.blog_id,
-                "url": "{}/api/blogs/{}/".format(HOSTURL, bonorum.blog_id),
-                "view_url": "{}/{}/".format(HOSTURL, bonorum.blog_id),
+                "url": "{}/djangoapp_sample/api/blogs/{}/".format(
+                    HOSTURL,
+                    bonorum.blog_id
+                ),
+                "view_url": "{}/djangoapp_sample/{}/".format(
+                    HOSTURL,
+                    bonorum.blog_id
+                ),
                 "title": bonorum.blog.title,
             },
             "publish_start": bonorum.publish_start.isoformat(),
@@ -52,12 +67,25 @@ def test_article_viewset_list(db):
         },
         {
             "id": lorem.id,
-            "url": "{}/api/articles/{}/".format(HOSTURL, lorem.id),
-            "view_url": "{}/{}/{}/".format(HOSTURL, lorem.blog_id, lorem.id),
+            "url": "{}/djangoapp_sample/api/articles/{}/".format(
+                HOSTURL,
+                lorem.id
+            ),
+            "view_url": "{}/djangoapp_sample/{}/{}/".format(
+                HOSTURL,
+                lorem.blog_id,
+                lorem.id
+            ),
             "blog": {
                 "id": lorem.blog_id,
-                "url": "{}/api/blogs/{}/".format(HOSTURL, lorem.blog_id),
-                "view_url": "{}/{}/".format(HOSTURL, lorem.blog_id),
+                "url": "{}/djangoapp_sample/api/blogs/{}/".format(
+                    HOSTURL,
+                    lorem.blog_id
+                ),
+                "view_url": "{}/djangoapp_sample/{}/".format(
+                    HOSTURL,
+                    lorem.blog_id
+                ),
                 "title": lorem.blog.title,
             },
             "publish_start": lorem.publish_start.isoformat(),
@@ -85,7 +113,7 @@ def test_article_viewset_detail(db):
     # Use test client to get article object
     client = APIClient()
     response = client.get(
-        "/api/articles/{}/".format(lorem.id),
+        "/djangoapp_sample/api/articles/{}/".format(lorem.id),
         format="json"
     )
     json_data = response.json()
@@ -93,12 +121,25 @@ def test_article_viewset_detail(db):
     # Expected payload from JSON response
     expected = {
         "id": lorem.id,
-        "url": "{}/api/articles/{}/".format(HOSTURL, lorem.id),
-        "view_url": "{}/{}/{}/".format(HOSTURL, lorem.blog_id, lorem.id),
+        "url": "{}/djangoapp_sample/api/articles/{}/".format(
+            HOSTURL,
+            lorem.id
+        ),
+        "view_url": "{}/djangoapp_sample/{}/{}/".format(
+            HOSTURL,
+            lorem.blog_id,
+            lorem.id
+        ),
         "blog": {
             "id": lorem.blog_id,
-            "url": "{}/api/blogs/{}/".format(HOSTURL, lorem.blog_id),
-            "view_url": "{}/{}/".format(HOSTURL, lorem.blog_id),
+            "url": "{}/djangoapp_sample/api/blogs/{}/".format(
+                HOSTURL,
+                lorem.blog_id
+            ),
+            "view_url": "{}/djangoapp_sample/{}/".format(
+                HOSTURL,
+                lorem.blog_id
+            ),
             "title": lorem.blog.title,
         },
         "publish_start": lorem.publish_start.isoformat(),
@@ -122,7 +163,7 @@ def test_article_viewset_forbidden(db):
 
     # Try to create a new article
     response = client.post(
-        "/api/articles/",
+        "/djangoapp_sample/api/articles/",
         {
             "title": "Ping",
         },
@@ -132,7 +173,7 @@ def test_article_viewset_forbidden(db):
 
     # Try to edit an existing article
     response = client.post(
-        "/api/articles/{}/".format(foo.id),
+        "/djangoapp_sample/api/articles/{}/".format(foo.id),
         {
             "title": "Bar",
         },
@@ -142,7 +183,7 @@ def test_article_viewset_forbidden(db):
 
     # Try to delete an existing article
     response = client.delete(
-        "/api/articles/{}/".format(foo.id),
+        "/djangoapp_sample/api/articles/{}/".format(foo.id),
         format="json"
     )
     assert response.status_code == 403
@@ -163,7 +204,7 @@ def test_article_viewset_post(db):
     client.force_authenticate(user=user)
 
     # This will fail because of missing required fields
-    response = client.post("/api/articles/", {}, format="json")
+    response = client.post("/djangoapp_sample/api/articles/", {}, format="json")
     assert response.status_code == 400
     assert response.json() == {
         "blog_id": ["This field is required."],
@@ -176,7 +217,7 @@ def test_article_viewset_post(db):
         "blog_id": foo.id,
         "content": "Ping pong",
     }
-    response = client.post("/api/articles/", payload, format="json")
+    response = client.post("/djangoapp_sample/api/articles/", payload, format="json")
     json_data = response.json()
 
     # Check response status code according to HTTP method
@@ -215,7 +256,7 @@ def test_article_viewset_put(db):
     client = APIClient()
     client.force_authenticate(user=user)
     response = client.put(
-        "/api/articles/{}/".format(lorem.id),
+        "/djangoapp_sample/api/articles/{}/".format(lorem.id),
         payload,
         format="json"
     )
@@ -255,7 +296,7 @@ def test_article_viewset_patch(db):
     client = APIClient()
     client.force_authenticate(user=user)
     response = client.patch(
-        "/api/articles/{}/".format(lorem.id),
+        "/djangoapp_sample/api/articles/{}/".format(lorem.id),
         payload,
         format="json"
     )
@@ -285,7 +326,7 @@ def test_article_viewset_delete(db):
     # Use test client with authenticated user to create a new article
     client = APIClient()
     client.force_authenticate(user=user)
-    response = client.delete("/api/articles/{}/".format(lorem.id))
+    response = client.delete("/djangoapp_sample/api/articles/{}/".format(lorem.id))
 
     # Check response status code according to HTTP method
     assert response.status_code == 204

@@ -14,8 +14,8 @@ def test_blog_serialize_single(db):
 
     expected = {
         "id": blog.id,
-        "url": "/api/blogs/{}/".format(blog.id),
-        "view_url": "/{}/".format(blog.id),
+        "url": "/djangoapp_sample/api/blogs/{}/".format(blog.id),
+        "view_url": "/djangoapp_sample/{}/".format(blog.id),
         "title": "Foo",
         "article_count": 0,
     }
@@ -40,15 +40,15 @@ def test_blog_serialize_many(db):
     expected = [
         {
             "id": foo.id,
-            "url": "/api/blogs/{}/".format(foo.id),
-            "view_url": "/{}/".format(foo.id),
+            "url": "/djangoapp_sample/api/blogs/{}/".format(foo.id),
+            "view_url": "/djangoapp_sample/{}/".format(foo.id),
             "title": "Foo",
             "article_count": 1,
         },
         {
             "id": bar.id,
-            "url": "/api/blogs/{}/".format(bar.id),
-            "view_url": "/{}/".format(bar.id),
+            "url": "/djangoapp_sample/api/blogs/{}/".format(bar.id),
+            "view_url": "/djangoapp_sample/{}/".format(bar.id),
             "title": "Bar",
             "article_count": 0,
         },

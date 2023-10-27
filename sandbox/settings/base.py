@@ -3,7 +3,8 @@ Base Django settings for sandbox
 """
 
 from pathlib import Path
-from os.path import join
+
+from django import VERSION
 
 
 SECRET_KEY = "***TOPSECRET***"
@@ -58,9 +59,12 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale.
-USE_L10N = True
+# We want to avoid warning for this settings which is deprecated since Django 4.x but
+# needed for Django<=3.2
+if VERSION[0] < 4:
+    # If you set this to False, Django will not format dates, numbers and
+    # calendars according to the current locale.
+    USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
@@ -113,7 +117,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            join(PROJECT_PATH, "templates"),
+            PROJECT_PATH / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -142,7 +146,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.forms",
     "djangoapp_sample.apps.djangoapp_sampleConfig",
-    "rest_framework",
 ]
 
 LOGIN_REDIRECT_URL = "/"
@@ -153,7 +156,13 @@ LOGOUT_REDIRECT_URL = "/"
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 
-# Django REST Framework configuration
+"""
+Django REST Framework configuration
+"""
+INSTALLED_APPS.extend([
+    "rest_framework",
+])
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -161,6 +170,49 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+
+"""
+DjangoCMS configuration
+"""
+
+# Admin style need to be put before Django admin
+INSTALLED_APPS[0:0] = [
+    "djangocms_admin_style",
+]
+
+# Enable CMS required apps
+INSTALLED_APPS.extend([
+    "cms",
+    "treebeard",
+    "menus",
+    "sekizai",
+    "djangocms_text_ckeditor",
+])
+
+# Enable CMS middlewares
+MIDDLEWARE.extend([
+    "cms.middleware.utils.ApphookReloadMiddleware",
+    "cms.middleware.user.CurrentUserMiddleware",
+    "cms.middleware.page.CurrentPageMiddleware",
+    "cms.middleware.toolbar.ToolbarMiddleware",
+    "cms.middleware.language.LanguageCookieMiddleware",
+])
+
+# Required since DjangoCMS 3.7.2
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+# Enable required cms context processors
+TEMPLATES[0]["OPTIONS"]["context_processors"].extend([
+    "sekizai.context_processors.sekizai",
+    "cms.context_processors.cms_settings",
+])
+
+# Define cms page templates
+CMS_TEMPLATES = [
+    ("pages/default.html", "Default"),
+]
+
 """
 SPECIFIC BASE APPLICATIONS SETTINGS BELOW
 """

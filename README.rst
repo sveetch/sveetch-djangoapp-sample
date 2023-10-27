@@ -2,9 +2,9 @@
 .. _Django: https://www.djangoproject.com/
 .. _Django REST framework: https://www.django-rest-framework.org/
 
-=========================
-Sveetch Django app sample
-=========================
+=================
+Django app sample
+=================
 
 A project sample created from cookiecutter-sveetch-djangoapp
 

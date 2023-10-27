@@ -1,6 +1,6 @@
 {
-    "name": "Sveetch Django app sample frontend",
-    "version": "0.6.0",
+    "name": "Django app sample frontend",
+    "version": "0.7.0",
     "description": "The project frontend.",
     "author": "David Thenon <sveetch@gmail.com>",
     "private": true,

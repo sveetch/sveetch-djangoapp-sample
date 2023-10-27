@@ -1,20 +1,21 @@
 {
-    "__class_name": "SveetchDjangoappSample",
+    "__class_name": "Sveetchdjangoappsample",
     "_checkout": null,
     "_output_dir": "/home/emencia/Projects/Apps/Cookies-dev/Djangoapp/dist",
     "_repo_dir": ".",
-    "_sveetch_djangoapp_version": "0.6.0",
+    "_sveetch_djangoapp_version": "0.7.0-pre.11",
     "_template": ".",
     "app_name": "djangoapp_sample",
     "author_email": "sveetch@gmail.com",
     "author_name": "David Thenon",
     "author_username": "sveetch",
     "include_api": true,
+    "include_cmsplugin": true,
     "include_frontend": true,
     "init_git_repository": false,
     "package_name": "sveetch-djangoapp-sample",
-    "project_name": "Sveetch Django app sample",
+    "project_name": "Django app sample",
     "project_short_description": "A project sample created from cookiecutter-sveetch-djangoapp",
     "pypi_username": "sveetch",
-    "version": "0.6.0"
+    "version": "0.7.0"
 }

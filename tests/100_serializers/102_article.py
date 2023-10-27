@@ -30,12 +30,12 @@ def test_article_serialize_single(db):
 
     expected = {
         "id": lorem.id,
-        "url": "/api/articles/{}/".format(lorem.id),
-        "view_url": "/{}/{}/".format(foo.id, lorem.id),
+        "url": "/djangoapp_sample/api/articles/{}/".format(lorem.id),
+        "view_url": "/djangoapp_sample/{}/{}/".format(foo.id, lorem.id),
         "blog": {
             "id": foo.id,
-            "url": "/api/blogs/{}/".format(foo.id),
-            "view_url": "/{}/".format(foo.id),
+            "url": "/djangoapp_sample/api/blogs/{}/".format(foo.id),
+            "view_url": "/djangoapp_sample/{}/".format(foo.id),
             "title": "Foo",
         },
         "title": "Lorem",
@@ -80,12 +80,12 @@ def test_article_serialize_many(db):
     expected = [
         {
             "id": lorem.id,
-            "url": "/api/articles/{}/".format(lorem.id),
-            "view_url": "/{}/{}/".format(foo.id, lorem.id),
+            "url": "/djangoapp_sample/api/articles/{}/".format(lorem.id),
+            "view_url": "/djangoapp_sample/{}/{}/".format(foo.id, lorem.id),
             "blog": {
                 "id": foo.id,
-                "url": "/api/blogs/{}/".format(foo.id),
-                "view_url": "/{}/".format(foo.id),
+                "url": "/djangoapp_sample/api/blogs/{}/".format(foo.id),
+                "view_url": "/djangoapp_sample/{}/".format(foo.id),
                 "title": "Foo",
             },
             "title": "Lorem",
@@ -94,12 +94,12 @@ def test_article_serialize_many(db):
         },
         {
             "id": bonorum.id,
-            "url": "/api/articles/{}/".format(bonorum.id),
-            "view_url": "/{}/{}/".format(bar.id, bonorum.id),
+            "url": "/djangoapp_sample/api/articles/{}/".format(bonorum.id),
+            "view_url": "/djangoapp_sample/{}/{}/".format(bar.id, bonorum.id),
             "blog": {
                 "id": bar.id,
-                "url": "/api/blogs/{}/".format(bar.id),
-                "view_url": "/{}/".format(bar.id),
+                "url": "/djangoapp_sample/api/blogs/{}/".format(bar.id),
+                "view_url": "/djangoapp_sample/{}/".format(bar.id),
                 "title": "Bar",
             },
             "title": "Bonorum",
