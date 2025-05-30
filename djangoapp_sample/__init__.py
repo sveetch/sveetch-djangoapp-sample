@@ -1,4 +1,4 @@
-"""A system to compose project parts from applications enabled in a manifest"""
+"""A project sample created from cookiecutter-sveetch-djangoapp"""
 from importlib.metadata import version
 
 

@@ -4,7 +4,7 @@ from djangoapp_sample.factories import ArticleFactory, BlogFactory
 from djangoapp_sample.models import Article, Blog
 
 
-def test_blog_index_empty(db, client, cms_homepage):
+def test_blog_index_empty(db, client):
     """
     Without any existing blog, index view should just return the empty text.
     """
@@ -18,7 +18,7 @@ def test_blog_index_empty(db, client, cms_homepage):
     assert "No blogs yet." == content
 
 
-def test_blog_index_basic(db, client, cms_homepage):
+def test_blog_index_basic(db, client):
     """
     Blog index view should list every blog.
     """
@@ -47,7 +47,7 @@ def test_blog_index_basic(db, client, cms_homepage):
     assert expected_urls == [item.find("a").get("href") for item in items]
 
 
-def test_blog_index_pagination(settings, db, client, cms_homepage):
+def test_blog_index_pagination(settings, db, client):
     """
     Blog index view is paginated from setting limit, not every blog is listed
     on the same page.
@@ -93,7 +93,7 @@ def test_blog_index_pagination(settings, db, client, cms_homepage):
     assert 1 == len(items)
 
 
-def test_blog_detail_404(db, client, cms_homepage):
+def test_blog_detail_404(db, client):
     """
     Try to reach unexisting blog should return a 404 response.
     """
@@ -104,7 +104,7 @@ def test_blog_detail_404(db, client, cms_homepage):
     assert response.status_code == 404
 
 
-def test_blog_detail_no_article(db, client, cms_homepage):
+def test_blog_detail_no_article(db, client):
     """
     Without any related article, blog detail view should just contains its
     content and return the empty text for article list.
@@ -126,7 +126,7 @@ def test_blog_detail_no_article(db, client, cms_homepage):
     assert "No articles yet." == content
 
 
-def test_blog_detail_article_pagination(settings, db, client, cms_homepage):
+def test_blog_detail_article_pagination(settings, db, client):
     """
     Blog index detail has a paginated list of article and so not every blog
     articles are listed on the same page.

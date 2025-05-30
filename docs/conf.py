@@ -31,7 +31,7 @@ from djangoapp_sample import __version__ as djangoapp_sample_version
 # -- Project information -----------------------------------------------------
 
 project = "sveetch-djangoapp-sample"
-copyright = "2023, David Thenon"
+copyright = "2025, David Thenon"
 author = "David Thenon"
 
 # The short X.Y version
@@ -49,6 +49,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
+    "sphinx.ext.todo",
     "sphinx_copybutton",
 ]
 

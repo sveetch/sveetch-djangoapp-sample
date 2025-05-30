@@ -1,6 +1,7 @@
 .. _Python: https://www.python.org/
 .. _Django: https://www.djangoproject.com/
 .. _Django REST framework: https://www.django-rest-framework.org/
+.. _DjangoCMS: https://docs.django-cms.org/
 
 =================
 Django app sample
@@ -9,12 +10,13 @@ Django app sample
 A project sample created from cookiecutter-sveetch-djangoapp
 
 
-Dependancies
+Dependencies
 ************
 
-* `Python`_>=3.8;
-* `Django`_>=3.2,<4.2;
-* `Django REST framework`_>=3.14.0;
+* `Python`_>=3.10;
+* `Django`_>=4.2;
+* `Django REST framework`_>=3.16.0;
+* `DjangoCMS`_>5.0.0;
 
 
 Links

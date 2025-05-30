@@ -3,7 +3,7 @@ from djangoapp_sample.utils.tests import html_pyquery
 from djangoapp_sample.factories import ArticleFactory, BlogFactory
 
 
-def test_article_detail_404(db, client, cms_homepage):
+def test_article_detail_404(db, client):
     """
     Try to reach unexisting article should return a 404 response.
     """
@@ -16,7 +16,7 @@ def test_article_detail_404(db, client, cms_homepage):
     assert response.status_code == 404
 
 
-def test_article_detail_noblog(db, client, cms_homepage):
+def test_article_detail_noblog(db, client):
     """
     If required blog ID in url does not exists, article detail should return a
     404 response.
@@ -28,7 +28,7 @@ def test_article_detail_noblog(db, client, cms_homepage):
     assert response.status_code == 404
 
 
-def test_article_detail_content(db, client, cms_homepage):
+def test_article_detail_content(db, client):
     """
     Article content should be displayed correctly.
     """

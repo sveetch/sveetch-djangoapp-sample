@@ -13,7 +13,7 @@ SPHINX_RELOAD_BIN=$(PYTHON_BIN) docs/sphinx_reload.py
 TOX_BIN=$(VENV_PATH)/bin/tox
 TWINE_BIN=$(VENV_PATH)/bin/twine
 
-DJANGO_MANAGE=$(SANDBOX_DIR)/manage.py
+DJANGO_MANAGE=manage.py
 
 PACKAGE_NAME=sveetch-djangoapp-sample
 PACKAGE_SLUG=sveetch_djangoapp_sample
@@ -60,6 +60,8 @@ help:
 	@echo "  migrations                 -- to create new migrations for application after changes"
 	@echo "  migrate                    -- to apply demo database migrations"
 	@echo "  superuser                  -- to create a superuser for Django admin"
+	@echo "  po                         -- to update every PO files from application for enabled languages"
+	@echo "  mo                         -- to build MO files from application PO files"
 	@echo
 	@echo "  Frontend commands"
 	@echo "  ================="
@@ -93,6 +95,7 @@ clean-pycache:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Clear Python cache <---$(FORMATRESET)\n"
 	@echo ""
+	rm -Rf .tox
 	rm -Rf .pytest_cache
 	find . -type d -name "__pycache__"|xargs rm -Rf
 	find . -name "*\.pyc"|xargs rm -f
@@ -102,6 +105,7 @@ clean-backend-install:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Clear installation <---$(FORMATRESET)\n"
 	@echo ""
+	rm -Rf dist
 	rm -Rf $(VENV_PATH)
 	rm -Rf $(PACKAGE_SLUG).egg-info
 .PHONY: clean-install
@@ -152,10 +156,6 @@ venv:
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Install virtual environment <---$(FORMATRESET)\n"
 	@echo ""
 	virtualenv -p $(PYTHON_INTERPRETER) $(VENV_PATH)
-	# Uncomment these two lines if you want development install support on old
-	# distributions (<2020)
-	#$(PIP_BIN) install --upgrade pip
-	#$(PIP_BIN) install --upgrade setuptools
 .PHONY: venv
 
 install-backend:
@@ -170,8 +170,6 @@ install-frontend:
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Installing frontend requirements <---$(FORMATRESET)\n"
 	@echo ""
 	cd $(FRONTEND_DIR) && npm install
-# 	@mkdir -p $(STATICFILES_DIR)/fonts
-# 	${MAKE} icon-font
 .PHONY: install-frontend
 
 install: venv create-var-dirs install-backend migrate install-frontend frontend
@@ -214,10 +212,24 @@ superuser:
 
 run:
 	@echo ""
-	@echo "==== Running development server ===="
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Running development server <---$(FORMATRESET)\n"
 	@echo ""
 	$(PYTHON_BIN) $(DJANGO_MANAGE) runserver 0.0.0.0:8001
 .PHONY: run
+
+po:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Updating PO from application <---$(FORMATRESET)\n"
+	@echo ""
+	@cd $(APPLICATION_NAME); ../$(PYTHON_BIN) ../$(DJANGO_MANAGE) makemessages -a --keep-pot --no-obsolete
+.PHONY: po
+
+mo:
+	@echo ""
+	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Building MO from application <---$(FORMATRESET)\n"
+	@echo ""
+	@cd $(APPLICATION_NAME); ../$(PYTHON_BIN) ../$(DJANGO_MANAGE) compilemessages --verbosity 3
+.PHONY: mo
 
 css:
 	@echo ""
@@ -292,7 +304,7 @@ test:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Tests <---$(FORMATRESET)\n"
 	@echo ""
-	$(PYTEST_BIN) -vv tests/
+	$(PYTEST_BIN) --reuse-db tests/
 	rm -Rf var/media-tests/
 .PHONY: test
 
@@ -300,7 +312,7 @@ test-initial:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Tests from zero <---$(FORMATRESET)\n"
 	@echo ""
-	$(PYTEST_BIN) -vv --reuse-db --create-db tests/
+	$(PYTEST_BIN) --reuse-db --create-db tests/
 	rm -Rf var/media-tests/
 .PHONY: test-initial
 
@@ -308,7 +320,7 @@ freeze-dependencies:
 	@echo ""
 	@printf "$(FORMATBLUE)$(FORMATBOLD)---> Freeze dependencies versions <---$(FORMATRESET)\n"
 	@echo ""
-	$(VENV_PATH)/bin/python freezer.py
+	$(VENV_PATH)/bin/python freezer.py ${PACKAGE_NAME} --destination=frozen.txt
 .PHONY: freeze-dependencies
 
 build-package:
@@ -340,7 +352,7 @@ tox:
 	$(TOX_BIN)
 .PHONY: tox
 
-quality: test-initial flake check-migrations docs check-release freeze-dependencies
+quality: check-django check-migrations test-initial flake docs check-release freeze-dependencies
 	@echo ""
 	@printf "$(FORMATGREEN)$(FORMATBOLD) ♥ ♥ Everything should be fine ♥ ♥ $(FORMATRESET)\n"
 	@echo ""
